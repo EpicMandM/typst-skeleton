@@ -1,0 +1,41 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: 0.15.1
+
+      - name: Install typstyle and tinymist
+        uses: taiki-e/install-action@v2
+        with:
+          tool: typstyle@0.15.1,tinymist@0.15.4
+
+      - name: Show toolchain versions
+        run: |
+          typst --version
+          typstyle --version
+          tinymist --version
+
+      - name: Validate (fallback fonts; no Microsoft fonts)
+        run: ./scripts/check.sh
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: article-pdf
+          path: build/article.pdf
+          if-no-files-found: error

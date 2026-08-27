@@ -1,0 +1,9 @@
+# Optional direnv hook. Copy to `.envrc` and run `direnv allow`.
+# Do not commit `.envrc` if it contains machine-specific paths you prefer private.
+
+# Directory of locally installed article fonts (outside Git), e.g. Microsoft fonts
+# you are licensed to use. Do not place font binaries in this repository.
+export TYPST_FONT_PATHS="$HOME/.local/share/article-fonts/microsoft"
+
+# Optional: require Times New Roman during validation
+# export STRICT_FONTS=1

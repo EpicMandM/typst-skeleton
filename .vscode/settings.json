@@ -1,0 +1,12 @@
+{
+  "[typst]": {
+    "editor.defaultFormatter": "myriad-dreamin.tinymist",
+    "editor.formatOnSave": true
+  },
+  "tinymist.formatterMode": "typstyle",
+  "tinymist.exportPdf": "onSave",
+  "tinymist.rootPath": "${workspaceFolder}",
+  "tinymist.typstExtraArgs": [
+    "${workspaceFolder}/main.typ"
+  ]
+}

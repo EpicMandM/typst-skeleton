@@ -1,0 +1,30 @@
+# Generated outputs
+/build/**
+!/build/.gitkeep
+*.pdf
+
+# Local environment
+.envrc
+.env
+.env.*
+!.envrc.example
+
+# Proprietary / local font binaries (keep fonts outside Git)
+*.ttf
+*.otf
+*.ttc
+*.TTF
+*.OTF
+*.TTC
+fonts/
+.local-fonts/
+
+# Editor / OS junk
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
