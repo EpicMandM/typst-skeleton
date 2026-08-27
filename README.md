@@ -1,6 +1,6 @@
 # Typst article skeleton
 
-Minimal, reproducible Typst environment for academic/technical writing with an AI coding agent.
+Minimal, reproducible Typst environment for technical writing with an AI coding agent.
 
 ## Arch Linux prerequisites
 
