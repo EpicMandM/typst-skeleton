@@ -7,6 +7,13 @@ on:
 permissions:
   contents: read
 
+env:
+  TYPSTYLE_VERSION: "0.15.1"
+  # Arch may package newer tinymist; crates.io/GitHub stable pin for CI.
+  TINYMIST_VERSION: "0.15.2"
+  TYPSTYLE_SHA256: "7aaa0b0fe54ee859c2e138c3f8d307960b06fe072ab9eb14bcf6ab50b5fe9c86"
+  TINYMIST_ARCHIVE_SHA256: "46ff973fbc89c89714e7b03488498404da0a517d4686e3f6f870b978c91d5f84"
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -19,10 +26,23 @@ jobs:
         with:
           typst-version: 0.15.1
 
-      - name: Install typstyle and tinymist
-        uses: taiki-e/install-action@v2
-        with:
-          tool: typstyle@0.15.1,tinymist@0.15.4
+      - name: Install typstyle and tinymist from GitHub Releases
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+          typstyle_url="https://github.com/typstyle-rs/typstyle/releases/download/v${TYPSTYLE_VERSION}/typstyle-x86_64-unknown-linux-musl"
+          curl -fsSL -o "$HOME/.local/bin/typstyle" "$typstyle_url"
+          echo "${TYPSTYLE_SHA256}  $HOME/.local/bin/typstyle" | sha256sum -c -
+          chmod +x "$HOME/.local/bin/typstyle"
+
+          archive="tinymist-x86_64-unknown-linux-musl.tar.gz"
+          tinymist_base="https://github.com/Myriad-Dreamin/tinymist/releases/download/v${TINYMIST_VERSION}"
+          curl -fsSL -o "/tmp/${archive}" "${tinymist_base}/${archive}"
+          echo "${TINYMIST_ARCHIVE_SHA256}  /tmp/${archive}" | sha256sum -c -
+          tar -xzf "/tmp/${archive}" -C /tmp
+          install -m 755 "/tmp/tinymist-x86_64-unknown-linux-musl/tinymist" "$HOME/.local/bin/tinymist"
 
       - name: Show toolchain versions
         run: |
